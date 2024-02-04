@@ -29,13 +29,19 @@ sudo nano /lib/systemd/system/led_testigo.service
 # luego dentro pegamos
 [Unit]
 Description=led testigo
+
 After=multi-user.target
 
+
 [Service]
+
 Type=idle
+
 ExecStart=/usr/bin/python3 /home/"USUARIO"/master/master.py
 
+
 [Install]
+
 WantedBy=multi-user.target
 
 # cerramos y guardamos
@@ -51,6 +57,9 @@ sudo systemctl enable led_testigo.service
 # control led testigo indicador que la raspberry pi esta encendida 
 
 import RPi.GPIO as GPIO
+
 GPIO.setmode(GPIO.BCM)
+
 GPIO.setup(26, GPIO.OUT)
+
 GPIO.output(26, True)
