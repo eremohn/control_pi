@@ -5,14 +5,14 @@ sudo apt -y update && sudo apt -y install gdebi arduino gparted onboard gfortran
 
 # necesario para medidor de voltaje INA 219
 sudo pip3 install adafruit-circuitpython-ina219
- 
+
 # brillo 
 sudo nano /sys/class/backlight/10-0045/brightness
 
 # fritzing
-cd /usr/share/fritzing/
-sudo rm -r parts
-sudo git clone https://github.com/fritzing/fritzing-parts.git parts
+cd /usr/share/fritzing/ \n
+sudo rm -r parts \n
+sudo git clone https://github.com/fritzing/fritzing-parts.git parts \n
 
 # snap store
 sudo reboot
