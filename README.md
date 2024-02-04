@@ -10,16 +10,21 @@ sudo pip3 install adafruit-circuitpython-ina219
 sudo nano /sys/class/backlight/10-0045/brightness
 
 # fritzing
-cd /usr/share/fritzing/ \n
-sudo rm -r parts \n
-sudo git clone https://github.com/fritzing/fritzing-parts.git parts \n
+cd /usr/share/fritzing/ 
+
+sudo rm -r parts 
+
+sudo git clone https://github.com/fritzing/fritzing-parts.git parts 
+
 
 # snap store
 sudo reboot
+
 sudo snap install core
+
 sudo snap install snap-store
 
-#como ejecutar un led testigo
+# como ejecutar un led testigo
 sudo nano /lib/systemd/system/led_testigo.service
 # luego dentro pegamos
 [Unit]
@@ -32,13 +37,19 @@ ExecStart=/usr/bin/python3 /home/"USUARIO"/master/master.py
 
 [Install]
 WantedBy=multi-user.target
+
 # cerramos y guardamos
+
 # en la terminal 
+
 sudo chmod 644 /lib/systemd/system/led_testigo.service
+
 sudo systemctl daemon-reload
+
 sudo systemctl enable led_testigo.service
 
 # control led testigo indicador que la raspberry pi esta encendida 
+
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(26, GPIO.OUT)
