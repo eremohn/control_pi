@@ -1,7 +1,7 @@
 # control_pi
 # programas básicos necesarios para crear una raspberry pi de escritorio 
 
-sudo apt -y update && sudo apt -y install gdebi arduino gparted onboard gfortran viewnior fritzing texlive-full python3-pip unrar-free rpi-imager inkscape freecad stellarium simple-scan nmap octave snapd transmission-gtk p7zip p7zip-full gnome-disk-utility && sudo apt -y autoremove && sudo apt -y clean && sudo apt -y update && sudo apt -y upgrade && sudo apt -y full-upgrade
+sudo apt -y update && sudo apt -y install xrdp gdebi arduino gparted onboard gfortran viewnior fritzing texlive-full python3-pip unrar-free rpi-imager inkscape freecad stellarium simple-scan nmap octave snapd transmission-gtk p7zip p7zip-full gnome-disk-utility && sudo apt -y autoremove && sudo apt -y clean && sudo apt -y update && sudo apt -y upgrade && sudo apt -y full-upgrade
 
 # necesario para medidor de voltaje INA 219
 sudo pip3 install adafruit-circuitpython-ina219
