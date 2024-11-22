@@ -2,7 +2,7 @@
 programs para raspberry pi
 temperatura gpio13
 
-sudo apt -y update && sudo apt -y install gdebi arduino gparted onboard gfortran viewnior fritzing texlive-full python3-pip unrar-free rpi-imager inkscape freecad stellarium simple-scan nmap octave snapd transmission-gtk p7zip p7zip-full gnome-disk-utility && sudo apt -y autoremove && sudo apt -y clean && sudo apt -y update && sudo apt -y upgrade && sudo apt -y full-upgrade
+sudo apt -y update && sudo apt -y install xrdp gdebi arduino gparted onboard gfortran viewnior fritzing texlive-full python3-pip unrar-free rpi-imager inkscape freecad stellarium simple-scan nmap octave snapd transmission-gtk p7zip p7zip-full gnome-disk-utility && sudo apt -y autoremove && sudo apt -y clean && sudo apt -y update && sudo apt -y upgrade && sudo apt -y full-upgrade
 
 sudo pip3 install adafruit-circuitpython-ina219
 
@@ -34,7 +34,7 @@ After=multi-user.target
 
 [Service]
 Type=idle
-ExecStart=/usr/bin/python3 /home/eremohn/master/master_portable.py
+ExecStart=/usr/bin/python3 /home/'USUARIO'/master/master_portable.py
 
 [Install]
 WantedBy=multi-user.target
