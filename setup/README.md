@@ -8,7 +8,7 @@ Incluye herramientas de escritorio, utilidades del sistema, soporte para hardwar
 
 ## Archivos
 
-- `install_rpi.sh`: Script principal de instalación automática.
+- `setup_rpi_auto.sh`: Script principal de instalación automática.
 
 ---
 
@@ -34,13 +34,13 @@ Incluye herramientas de escritorio, utilidades del sistema, soporte para hardwar
 
    ```bash
    cd setup
-   chmod +x install_rpi.sh
+   chmod +x setup_rpi_auto.sh
    ```
 
 2. Ejecutar el script:
 
    ```bash
-   sudo ./install_rpi.sh
+   sudo ./setup_rpi_auto.sh
    ```
 
 3. Reiniciar el sistema (si el script no lo hizo automáticamente):
