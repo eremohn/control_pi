@@ -12,11 +12,12 @@ Facilitar el uso de una Raspberry Pi como sistema portátil alimentado por bater
 
 ## 📁 Estructura del proyecto
 
-La carpeta `master/` contiene los scripts principales:
+- `master/`: Contiene los scripts principales.
+  - `master.py`: Script base para escritorio, configura GPIO y funciones comunes.
+  - `master_portable.py`: Versión portable. Lee el voltaje del INA219 y hace parpadear un LED cuando la batería baja de cierto umbral.
+  - `led_testigo.service`: (opcional) Archivo de servicio para iniciar el script automáticamente al arrancar.
 
-- `master.py`: Script base para escritorio, configura GPIO y funciones comunes.
-- `master_portable.py`: Versión portable. Lee el voltaje del INA219 y hace parpadear un LED cuando la batería baja de cierto umbral.
-- `led_testigo.service`: (opcional) Archivo de servicio para iniciar el script automáticamente al arrancar.
+- `setup/`: Contiene un script de instalación automática que configura el entorno de la Raspberry Pi con herramientas útiles, soporte para I2C, Snap Store, y dependencias necesarias para ejecutar los scripts de este proyecto de forma rápida y ordenada.
 
 ---
 
@@ -75,7 +76,7 @@ Conecta el sensor INA219 a los pines SDA/SCL (GPIO 2 y 3), alimentación (3.3V o
 
 ---
 
-## Agregar como servicio de sistema (Opcional)
+## 📁 Agregar como servicio de sistema (Opcional)
 Puedes hacer que el script master_portable.py se inicie automáticamente con el sistema:
 
 ### 1. Crear el archivo del servicio
@@ -119,7 +120,7 @@ sudo systemctl start led_testigo.service
 ```
 ---
 
-## Prueba manual
+## 📁 Prueba manual
 
 También puedes ejecutarlo directamente:
 
@@ -139,7 +140,7 @@ python3 master/master_portable.py
 
 ---
 
-## Próximamente
+## 📁 Próximamente
 
 - Captura del LED en funcionamiento  
 - Gráfico de consumo con INA219  
@@ -147,7 +148,7 @@ python3 master/master_portable.py
 
 ---
 
-## Licencia
+## 📁 Licencia
 
 Este proyecto está bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
 
