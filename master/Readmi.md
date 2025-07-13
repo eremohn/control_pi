@@ -1,3 +1,0 @@
-- copiar el fichero master a nuestra pi
-- entrar al fichero master y abrir el archivo master.py o master_portable.py
-- seguir los pasos del contenido 
