@@ -1,42 +1,154 @@
 # Control Pi
 
-Este repositorio tiene como objetivo proporcionar una serie de programas y configuraciones básicas necesarias para convertir una Raspberry Pi en un sistema de escritorio funcional, así como para facilitar la integración de hardware adicional, como el medidor de voltaje INA 219 y la configuración de un LED indicador para mostrar cuando la Raspberry Pi está encendida.
-
-### Propósito
-
-El propósito de este repositorio es facilitar la instalación y configuración de herramientas y programas comunes para que puedas usar tu Raspberry Pi como una computadora de escritorio. Además, incluye algunos scripts para integrar hardware adicional como el medidor de voltaje y un LED indicador para mostrar el estado de la Raspberry Pi.
+Este repositorio tiene como objetivo proporcionar una serie de scripts y configuraciones necesarias para convertir una Raspberry Pi en un sistema funcional, con integración de sensores y controladores como el INA219 para monitoreo de voltaje, y un LED testigo para indicar estado de batería.
 
 ---
 
-## Archivos
+## 🧠 Propósito
 
-Los archivos importantes de este repositorio están dentro de la carpeta `master`, que contiene los siguientes archivos:
-
-- **'master.py'**: Un script que incluye una serie de programas y configuraciones básicas para el funcionamiento de la Raspberry Pi, además de controlar un LED indicador de encendido.
-- **'master_portable.py'**: Un script diseñado para hacer que la Raspberry Pi sea portable mediante el uso de baterías externas. Utiliza el medidor de voltaje INA 219 para leer el nivel de carga de la batería, y hace que el LED parpadee cuando la batería está baja, permitiendo que el usuario conecte la Raspberry Pi a la corriente sin riesgo de apagados repentinos debido a un bajo voltaje.
-- **'README.md'**: Este archivo que describe el repositorio, su propósito y cómo utilizarlo.
+Facilitar el uso de una Raspberry Pi como sistema portátil alimentado por baterías, mostrando alertas visuales mediante un LED cuando la batería está baja. Ideal para proyectos embebidos o portables.
 
 ---
 
-## Requisitos previos
+## 📁 Estructura del proyecto
 
-Antes de comenzar, asegúrate de tener una Raspberry Pi con el sistema operativo **Raspberry Pi OS** (anteriormente Raspbian) instalado.
+La carpeta `master/` contiene los scripts principales:
+
+- `master.py`: Script base para escritorio, configura GPIO y funciones comunes.
+- `master_portable.py`: Versión portable. Lee el voltaje del INA219 y hace parpadear un LED cuando la batería baja de cierto umbral.
+- `led_testigo.service`: (opcional) Archivo de servicio para iniciar el script automáticamente al arrancar.
 
 ---
 
-## Instrucciones de instalación y uso
+## 🧰 Requisitos
 
-### 1. Copiar los archivos a tu Raspberry Pi
+### Hardware
 
-1. Descarga los archivos del repositorio o clónalos en tu Raspberry Pi.
-2. Copia la carpeta 'master' a tu Raspberry Pi.
+- Raspberry Pi 4 (u otra compatible)
+- Sensor INA219 conectado vía I²C
+- LED + resistencia (por ejemplo, 330Ω)
+- Cables dupont
+- Fuente o batería externa
 
-### 2. Ejecutar los scripts
+### Pines por defecto
 
-1. Una vez copiada la carpeta 'master' a tu Raspberry Pi, abre una terminal y navega a la carpeta 'master'.
-2. Abre el archivo 'master.py' o 'master_portable.py' con un editor de texto. Puedes usar un editor de texto como 'nano' o 'vim'.
-   
-   Por ejemplo:
+| Componente | GPIO usado    | Descripción     |
+|------------|---------------|-----------------|
+| LED        | GPIO 23       | Testigo batería |
+| INA219     | I²C (SDA/SCL) | GPIO 2 / 3      |
 
-   ```bash
-   nano master.py
+---
+
+## 🛠️ Instalación paso a paso
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/eremohn/control_pi.git
+cd control_pi
+
+```
+### 2. Crear y activar entorno virtual (opcional pero recomendado)
+
+```bash
+
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Instalar dependencias
+
+```bash
+pip install adafruit-blinka adafruit-circuitpython-ina219 RPi.GPIO
+
+```
+
+Asegúrate de tener habilitado I²C desde raspi-config:
+
+```bash
+sudo raspi-config
+# Interfacing Options -> I2C -> Enable
+
+```
+### 4. Cablear el hardware
+Conecta el sensor INA219 a los pines SDA/SCL (GPIO 2 y 3), alimentación (3.3V o 5V), GND y conecta el LED al GPIO 23 con su respectiva resistencia.
+
+---
+
+## Agregar como servicio de sistema (Opcional)
+Puedes hacer que el script master_portable.py se inicie automáticamente con el sistema:
+
+### 1. Crear el archivo del servicio
+
+```bash
+sudo nano /etc/systemd/system/led_testigo.service
+
+```
+Pegar:
+
+```bash
+[Unit]
+Description=LED testigo de bateria con INA219
+After=multi-user.target
+
+[Service]
+Type=simple
+User='USUARIO'
+Group='USUARIO'
+SupplementaryGroups=gpio,i2c
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/'USUARIO'/.venv/bin/python3 /home/'USUARIO'/master/master_portable.py
+WorkingDirectory=/home/'USUARIO'/master
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+```
+Asegúrate de reemplazar /home/'USUARIO'/ por tu ruta real si difiere.
+
+### 2. Recargar y habilitar el servicio
+
+```
+bashsudo systemctl daemon-reload
+sudo systemctl enable led_testigo.service
+sudo systemctl start led_testigo.service
+
+
+```
+---
+
+## Prueba manual
+
+También puedes ejecutarlo directamente:
+
+
+```
+source .venv/bin/activate
+python3 master/master_portable.py
+
+```
+---
+
+---
+
+## ✅ Estado
+
+✔️ Funcional en Raspberry Pi 4 + Debian Bookworm (Julio 2025)
+
+---
+
+## Próximamente
+
+- Captura del LED en funcionamiento  
+- Gráfico de consumo con INA219  
+- Versión con apagado seguro si el voltaje es crítico  
+
+---
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+
+  
